@@ -18,6 +18,8 @@ static DTidx n;
 // table M for the out-of-block queries (contains indices of block-minima)
 static DTsucc** M = NULL;
 
+#define inline __inline
+
 // because M just stores offsets (rel. to start of block), this method
 // re-calculates the true index:
 static inline DTidx m(DTidx k, DTidx block);

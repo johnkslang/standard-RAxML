@@ -26,6 +26,7 @@
  *  Bioinformatics 2006; doi: 10.1093/bioinformatics/btl446
  */
 
+#define _CRT_SECURE_NO_WARNINGS
 
 #ifndef WIN32  
 #include <sys/times.h>

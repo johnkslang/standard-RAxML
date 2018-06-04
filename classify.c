@@ -35,6 +35,8 @@
 #include <unistd.h> 
 #endif
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <limits.h>
 #include <math.h>
 #include <time.h> 
@@ -429,6 +431,7 @@ static nodeptr findRootDirection(nodeptr p, tree *tr, int rootNumber)
   /* one of the two subtrees must contain the root */
 
   assert(0);
+  return p;
 }
 
 

@@ -239,6 +239,8 @@ static double evaluatePartialGTRCATPROT(int i, double ki, int counter,  traversa
 
 #else
 
+#define inline __inline
+
 static inline void computeVectorGTRCATPROT(double *lVector, int *eVector, double ki, int i, double qz, double rz,
 					   traversalInfo *ti, double *EIGN, double *EI, double *EV, double *tipVector, 
 					   unsigned  char **yVector, int mxtips)

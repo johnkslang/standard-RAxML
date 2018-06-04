@@ -29,6 +29,7 @@
  *  Bioinformatics 2006; doi: 10.1093/bioinformatics/btl446
  */
 
+#define _CRT_SECURE_NO_WARNINGS
 
 #ifndef WIN32
 #include <sys/times.h>
@@ -75,6 +76,8 @@
 
 
 #include "axml.h"
+
+#define inline __inline
 
 extern const unsigned int mask32[32]; 
 /* vector-specific stuff */

@@ -1,4 +1,4 @@
-#include <unistd.h>
+//#include <unistd.h>
 
 #include <math.h>
 #include <time.h>
@@ -19,6 +19,9 @@
 #define FMAMACC(a,b,c) _mm256_fmadd_pd(b,c,a) 
 #endif
 
+#define inline __inline
+#define __attribute__(a)
+
 extern const unsigned int mask32[32];
 
 const union __attribute__ ((aligned (BYTE_ALIGNMENT)))
@@ -27,8 +30,6 @@ const union __attribute__ ((aligned (BYTE_ALIGNMENT)))
   __m256d m;
   
 } absMask_AVX = {{0x7fffffffffffffffULL, 0x7fffffffffffffffULL, 0x7fffffffffffffffULL, 0x7fffffffffffffffULL}};
-
-
 
 static inline __m256d hadd4(__m256d v, __m256d u)
 { 
@@ -2202,7 +2203,7 @@ void newviewGTRGAMMAPROT_AVX(int tipCase,
 #endif
 
 
-#if GCC_VERSION < 40500
+#if 0 // GCC_VERSION < 40500
    __m256d
     bitmask = _mm256_set_pd(0,0,0,-1);
 #else
@@ -2700,7 +2701,7 @@ void newviewGTRGAMMAPROT_AVX_LG4(int tipCase,
 #endif
 
 
-#if GCC_VERSION < 40500
+#if 0 // GCC_VERSION < 40500
    __m256d
     bitmask = _mm256_set_pd(0,0,0,-1);
 #else
@@ -3205,7 +3206,7 @@ void newviewGTRGAMMAPROT_AVX_GAPPED_SAVE(int tipCase,
 #endif
 
 
-#if GCC_VERSION < 40500
+#if 0 // GCC_VERSION < 40500
    __m256d
     bitmask = _mm256_set_pd(0,0,0,-1);
 #else

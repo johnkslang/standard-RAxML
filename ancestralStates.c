@@ -35,6 +35,8 @@
 #include <unistd.h> 
 #endif
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <limits.h>
 #include <math.h>
 #include <time.h> 

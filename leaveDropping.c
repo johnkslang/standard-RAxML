@@ -1,10 +1,12 @@
+
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 #include <assert.h>
 #include "axml.h"
-
 
 /* the define below makes the algorithm run much faster and should therefore always be used :-) */
 
@@ -1530,8 +1532,6 @@ static void pruneTaxon(tree *tr, unsigned int k)
   assert(p != tr->start && q != tr->start);
 }
   
-
-
 
 void computeRogueTaxa(tree *tr,  char* treeSetFileName, analdef *adef)
 {
