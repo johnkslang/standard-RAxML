@@ -4536,7 +4536,7 @@ static void newviewGTRGAMMA_GAPPED_SAVE(int tipCase,
 
 
 
-
+// johnk: spending lots of time here after modOpt, before printing Inference, during 1st phase inferencing
 static void newviewGTRGAMMA(int tipCase,
 			    double *x1_start, double *x2_start, double *x3_start,
 			    double *EV, double *tipVector,
@@ -7707,11 +7707,11 @@ void computeTraversalInfo(tree *tr, nodeptr p, traversalInfo *ti, int *counter, 
 	      z;
 	    
 	    z = q->z[i];	  
-	    z = (z > zmin) ? log(z) : log(zmin);
+	    z = (z > zmin) ? LOG(z) : LOG(zmin);
 	    ti[*counter].qz[i] = z;
 
 	    z = r->z[i];
-	    z = (z > zmin) ? log(z) : log(zmin);
+	    z = (z > zmin) ? LOG(z) : LOG(zmin);
 	    ti[*counter].rz[i] = z;
 
 #ifdef _BASTIEN
@@ -7764,11 +7764,11 @@ void computeTraversalInfo(tree *tr, nodeptr p, traversalInfo *ti, int *counter, 
 		double z;
 
 		z = q->z[i];			
-		z = (z > zmin) ? log(z) : log(zmin);
+		z = (z > zmin) ? LOG(z) : LOG(zmin);
 		ti[*counter].qz[i] = z;
 
 		z = r->z[i];
-		z = (z > zmin) ? log(z) : log(zmin);
+		z = (z > zmin) ? LOG(z) : LOG(zmin);
 		ti[*counter].rz[i] = z;
 
 #ifdef _BASTIEN
@@ -7812,11 +7812,11 @@ void computeTraversalInfo(tree *tr, nodeptr p, traversalInfo *ti, int *counter, 
 		double z;
 		
 		z = q->z[i];	
-		z = (z > zmin) ? log(z) : log(zmin);
+		z = (z > zmin) ? LOG(z) : LOG(zmin);
 		ti[*counter].qz[i] = z;
 
 		z = r->z[i];
-		z = (z > zmin) ? log(z) : log(zmin);
+		z = (z > zmin) ? LOG(z) : LOG(zmin);
 		ti[*counter].rz[i] = z;
 
 #ifdef _BASTIEN
@@ -8835,18 +8835,18 @@ void newviewMultiGrain(tree *tr,  double *x1, double *x2, double *x3, int *_ex1,
 	  if(tr->multiBranch)
 	    {
 	      pz = _pz[model];
-	      pz = (pz > zmin) ? log(pz) : log(zmin);
+	      pz = (pz > zmin) ? LOG(pz) : LOG(zmin);
 	      
 	      qz = _qz[model];
-	      qz = (qz > zmin) ? log(qz) : log(zmin);
+	      qz = (qz > zmin) ? LOG(qz) : LOG(zmin);
 	    }
 	  else
 	    {	  
 	      pz = _pz[0];
-	      pz = (pz > zmin) ? log(pz) : log(zmin);
+	      pz = (pz > zmin) ? LOG(pz) : LOG(zmin);
 	      
 	      qz = _qz[0];
-	      qz = (qz > zmin) ? log(qz) : log(zmin);
+	      qz = (qz > zmin) ? LOG(qz) : LOG(zmin);
 	    }
 	  
       

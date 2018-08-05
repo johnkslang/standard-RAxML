@@ -1230,7 +1230,7 @@ static void optInvar(tree *tr, double modelEpsilon, linkageList *ll)
 
    taking the logarithm this is:
 
-   log(FREQ_MIN) + log(c) - log(1 - FREQ_MIN) < w[i]
+   LOG(FREQ_MIN) + LOG(c) - LOG(1 - FREQ_MIN) < w[i]
 
    For the maximum allowed frequency which is: 
 
@@ -1255,7 +1255,7 @@ static double minFreq(int index, int whichFreq, tree *tr, double absoluteMin)
     if(i != whichFreq)
       c += exp(w[i]);
 
-  min = log(FREQ_MIN) + log(c) - log (1.0 - FREQ_MIN);
+  min = LOG(FREQ_MIN) + LOG(c) - LOG (1.0 - FREQ_MIN);
 
   if(0)
     {
@@ -1285,7 +1285,7 @@ static double maxFreq(int index, int whichFreq, tree *tr, double absoluteMax)
     if(i != whichFreq)
       c += exp(w[i]);
 
-  max = log(1.0 - ((double)(states - 1) * FREQ_MIN)) + log(c) - log ((double)(states - 1) * FREQ_MIN);
+  max = LOG(1.0 - ((double)(states - 1) * FREQ_MIN)) + LOG(c) - LOG ((double)(states - 1) * FREQ_MIN);
 
   if(0)
     {
@@ -3198,8 +3198,8 @@ static void autoProtein(tree *tr)
 		  { 
 		    //BIC: -2 * lnL + k * ln(n)
 		    double
-		      bicFixed = -2.0 * bestLhFixed + freeParamsFixed * log(samples),
-		      bicEmp   = -2.0 * bestLhEmp   + freeParamsEmp   * log(samples);
+		      bicFixed = -2.0 * bestLhFixed + freeParamsFixed * LOG(samples),
+		      bicEmp   = -2.0 * bestLhEmp   + freeParamsEmp   * LOG(samples);
 
 		    if(bicFixed < bicEmp)
 		      {
@@ -3349,6 +3349,7 @@ static void checkTolerance(double l1, double l2)
 
 void modOpt(tree *tr, analdef *adef, boolean resetModel, double likelihoodEpsilon)
 { 
+  //printf("##########In modOpt()########### resetModel is %d\n", resetModel);
   int i, model, catOpt = 0; 
 
   boolean
@@ -3590,7 +3591,7 @@ void modOpt(tree *tr, analdef *adef, boolean resetModel, double likelihoodEpsilo
 	  printf("after cat-opt %f\n", tr->likelihood);
 #endif	  
 
-	  break;	  
+	  break;
 	default:
 	  assert(0);
 	}       
@@ -3600,6 +3601,8 @@ void modOpt(tree *tr, analdef *adef, boolean resetModel, double likelihoodEpsilo
       checkTolerance(tr->likelihood, currentLikelihood);
                   
       printAAmatrix(tr, fabs(currentLikelihood - tr->likelihood));    
+      printf("fabs(currentLikelihood - tr->likelihood): %20.16g - %20.16g = %g >? %g\n",
+          currentLikelihood, tr->likelihood, fabs(currentLikelihood - tr->likelihood), likelihoodEpsilon);
     }
   while(fabs(currentLikelihood - tr->likelihood) > likelihoodEpsilon);  
   
@@ -3633,10 +3636,9 @@ static double branchLength(int model, double *z, tree *tr)
   assert(x <= zmax);
   
   if(!tr->multiBranch)             
-    x = -log(x);       
+    x = -LOG(x);       
   else
-    x = -log(x);
-
+    x = -LOG(x);
   return x;
 }
 

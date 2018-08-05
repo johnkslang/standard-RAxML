@@ -130,15 +130,15 @@ static void insertFast (tree *tr, nodeptr p, nodeptr q, int numBranches)
       
       for(i = 0; i < numBranches; i++)
 	{
-	  lzqr = (zqr[i] > zmin) ? log(zqr[i]) : log(zmin); 
-	  lzqs = (zqs[i] > zmin) ? log(zqs[i]) : log(zmin);
-	  lzrs = (zrs[i] > zmin) ? log(zrs[i]) : log(zmin);
+	  lzqr = (zqr[i] > zmin) ? LOG(zqr[i]) : LOG(zmin); 
+	  lzqs = (zqs[i] > zmin) ? LOG(zqs[i]) : LOG(zmin);
+	  lzrs = (zrs[i] > zmin) ? LOG(zrs[i]) : LOG(zmin);
 	  lzsum = 0.5 * (lzqr + lzqs + lzrs);
 	  
 	  lzq = lzsum - lzrs;
 	  lzr = lzsum - lzqs;
 	  lzs = lzsum - lzqr;
-	  lzmax = log(zmax);
+	  lzmax = LOG(zmax);
 	  
 	  if      (lzq > lzmax) {lzq = lzmax; lzr = lzqr; lzs = lzqs;} 
 	  else if (lzr > lzmax) {lzr = lzmax; lzq = lzqr; lzs = lzrs;}

@@ -3854,41 +3854,43 @@ void initReversibleGTR(tree *tr, int model)
 }
 
 
-double LnGamma (double alpha)
+double LnGamma(double alpha)
 {
-/* returns ln(gamma(alpha)) for alpha>0, accurate to 10 decimal places.  
-   Stirling's formula is used for the central polynomial part of the procedure.
-   Pike MC & Hill ID (1966) Algorithm 291: Logarithm of the gamma function.
-   Communications of the Association for Computing Machinery, 9:684
-*/
-  double x, f, z, result;
+    /* returns ln(gamma(alpha)) for alpha>0, accurate to 10 decimal places.
+       Stirling's formula is used for the central polynomial part of the procedure.
+       Pike MC & Hill ID (1966) Algorithm 291: Logarithm of the gamma function.
+       Communications of the Association for Computing Machinery, 9:684
+       */
+    double x, f, z, result;
 
-  x = alpha;
-  f = 0.0;
-  
-  if ( x < 7.0) 
-     {
-       f = 1.0;  
-       z = alpha - 1.0;
-      
-       while ((z = z + 1.0) < 7.0)  
-	 {	  
-	   f *= z;
-	 }
-       x = z;   
-     
-       assert(f != 0.0);
-	
-       f=-log(f);
-     }
-   
-   z = 1/(x*x);
-   
-   result = f + (x-0.5)*log(x) - x + .918938533204673 
-	  + (((-.000595238095238*z+.000793650793651)*z-.002777777777778)*z
-	       +.083333333333333)/x;  
+    x = alpha;
+    f = 0.0;
 
-   return result;
+    if (x < 7.0)
+    {
+        f = 1.0;
+        z = alpha - 1.0;
+
+        while ((z = z + 1.0) < 7.0)
+        {
+            f *= z;
+        }
+        x = z;
+
+        assert(f != 0.0);
+
+        f = -LOG(f);
+        //printf("stirling f = %f\n", f);
+    }
+
+    z = 1 / (x*x);
+
+    result = f + (x - 0.5)*LOG(x) - x + .918938533204673
+        + (((-.000595238095238*z + .000793650793651)*z - .002777777777778)*z
+        + .083333333333333) / x;
+    //printf("stirling f = %f\n", f);
+
+    return result;
 }
 
 
@@ -3915,7 +3917,7 @@ double IncompleteGamma (double x, double alpha, double ln_gamma_alpha)
    if (x<0 || p<=0) return (-1);
 
    
-   factor=exp(p*log(x)-x-g);   
+   factor=exp(p*LOG(x)-x-g);   
    if (x>1 && x>=p) goto l30;
    /* (1) series expansion */
    gin=1;  term=1;  rn=p;
@@ -3988,7 +3990,7 @@ double PointNormal (double prob)
    p1 = (p<0.5 ? p : 1-p);
    if (p1<1e-20) return (-9999);
 
-   y = sqrt (log(1/(p1*p1)));   
+   y = sqrt (LOG(1/(p1*p1)));   
    z = y + ((((y*a4+a3)*y+a2)*y+a1)*y+a0) / ((((y*b4+b3)*y+b2)*y+b1)*y+b0);
    return (p<0.5 ? -z : z);
 }
@@ -4011,14 +4013,14 @@ double PointChi2 (double prob, double v)
    g = LnGamma(v/2);
    
    xx=v/2;   c=xx-1;
-   if (v >= -1.24*log(p)) goto l1;
+   if (v >= -1.24*LOG(p)) goto l1;
 
    ch=pow((p*xx*exp(g+xx*aa)), 1/xx);
    if (ch-e<0) return (ch);
    goto l4;
 l1:
    if (v>.32) goto l3;
-   ch=0.4;   a=log(1-p);
+   ch=0.4;   a=LOG(1-p);
 l2:
    q=ch;  p1=1+ch*(4.67+ch);  p2=ch*(6.73+ch*(6.66+ch));
    t=-0.5+(4.67+2*ch)/p1 - (6.73+ch*(13.32+3*ch))/p2;
@@ -4029,7 +4031,7 @@ l2:
 l3:    
    x=PointNormal (p);
    p1=0.222222/v;   ch=v*pow((x*sqrt(p1)+1-p1), 3.0);
-   if (ch>2.2*v+6)  ch=-2*(log(1-p)-c*log(.5*ch)+g);
+   if (ch>2.2*v+6)  ch=-2*(LOG(1-p)-c*LOG(.5*ch)+g);
 l4:
    q=ch;   p1=.5*ch;   
    if ((t=IncompleteGamma (p1, xx, g))< 0.0) 
@@ -4039,7 +4041,7 @@ l4:
      }
   
    p2=p-t;
-   t=p2*exp(xx*aa+g+p1-c*log(ch));   
+   t=p2*exp(xx*aa+g+p1-c*LOG(ch));   
    b=t/ch;  a=0.5*t-b*c;
 
    s1=(210+a*(140+a*(105+a*(84+a*(70+60*a))))) / 420;

@@ -6238,7 +6238,8 @@ static void get_args(int argc, char *argv[], analdef *adef, tree *tr)
       
       flag = 0;
       
-      c = getopt_long(argc,argv, "R:T:E:N:B:L:P:S:Y:A:G:I:J:K:W:l:x:z:g:r:e:a:b:c:f:i:m:t:w:s:n:o:q:#:p:vudyjhHkMDFQUOVCX", long_options, &option_index/*&optind, &optarg*/);
+      c = getopt_long(argc,argv, "R:T:E:N:B:L:P:S:Y:A:G:I:J:K:W:l:x:z:g:r:e:a:b:c:f:i:m:t:w:s:n:o:q:#:p:vudyjhHkMDFQUOVCX",
+                      long_options, &option_index/*&optind, &optarg*/);
          
       if(c == -1)
 	break;          
@@ -11579,7 +11580,7 @@ static void computeDistances(tree *tr, analdef *adef)
 
 		if (z < zmin)
 		  z = zmin;
-		x += -log(z) * tr->partitionContributions[k];
+		x += -LOG(z) * tr->partitionContributions[k];
 	      }
 	  }
 	else
@@ -11587,7 +11588,7 @@ static void computeDistances(tree *tr, analdef *adef)
 	    z = result[0];
 	    if (z < zmin)
 	      z = zmin;
-	    x = -log(z);
+	    x = -LOG(z);
 	  }
 
 	/*printf("%s-%s \t %f\n", tr->nameList[i], tr->nameList[j], x);*/
@@ -12781,7 +12782,7 @@ static void sampleQuartetsWithoutReplacementD(tree *tr, int numberOfTaxa, int64_
     nreal = sampleSize,
     ninv = 1.0 / nreal,
     Nreal = numberOfQuartets,
-    vprime = exp(log(randum(&myseed)) * ninv),
+    vprime = EXP(LOG(randum(&myseed)) * ninv),
     qu1real,
     nmin1inv,
     x,
@@ -12807,12 +12808,12 @@ static void sampleQuartetsWithoutReplacementD(tree *tr, int numberOfTaxa, int64_
 	    x = Nreal * (-vprime + 1.0);
 	    s = trunc(x);
 	    if (s < qu1) break;
-	    vprime = exp(log(randum(&myseed)) * ninv);
+	    vprime = EXP(LOG(randum(&myseed)) * ninv);
 	  }
 	u = randum(&myseed);
 	negSreal = (double) s * (-1);
 	// step D3: Accept?
-	y1 = exp(log(u * Nreal / qu1real) * nmin1inv);
+	y1 = EXP(LOG(u * Nreal / qu1real) * nmin1inv);
 	vprime = y1 * (-x / Nreal + 1.0) * (qu1real / (negSreal + qu1real));
 	if (vprime <= 1.0) break; // Accept! test (2.8) is true
 	// step D4: Accept?
@@ -12835,13 +12836,13 @@ static void sampleQuartetsWithoutReplacementD(tree *tr, int numberOfTaxa, int64_
 	    bottom = -1.0 + bottom;
 	  }
 	
-	if(Nreal / (-x + Nreal) >= y1 * exp(log(y2) * nmin1inv))
+	if(Nreal / (-x + Nreal) >= y1 * EXP(LOG(y2) * nmin1inv))
 	  {
 	    // Accept!
-	    vprime = exp(log(randum(&myseed)) * nmin1inv);
+	    vprime = EXP(LOG(randum(&myseed)) * nmin1inv);
 	    break;
 	  }
-	vprime = exp(log(randum(&myseed)) * ninv);
+	vprime = EXP(LOG(randum(&myseed)) * ninv);
       }
     // Step D5: Select the (s+1)st record
     // Skip over the next s records and select the following one for the sample
@@ -14092,7 +14093,9 @@ static void adaptBranchLengths(tree *tr, nodeptr p, int *count)
 	  if(z < zmin)
 	    z = zmin;
 	  
-	  z = -log(z);
+	  z = -LOG(z);
+      //printf("z = %f\n", z);
+
 	  
 	  branchLength += z * factor;
 

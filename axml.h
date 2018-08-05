@@ -158,8 +158,8 @@
 #define NINT(x)   ((int) ((x)>0 ? ((x)+0.5) : ((x)-0.5)))
 
 
-#define LOG(x)  log(x)
-#define EXP(x)  exp(x)
+#define LOG(x)  (/*printf("LOG x = %g\n", x), */log(x))
+#define EXP(x)  (/*printf("EXP x = %g\n", x), */exp(x))
 
 
 
