@@ -1463,7 +1463,7 @@ void computeBIGRAPID (tree *tr, analdef *adef, boolean estimateModel)
       else
 	{
 	  evaluateGenericInitrav(tr, tr->start);
-      modOpt(tr, adef, FALSE, 1.0);
+      modOpt(tr, adef, FALSE, adef->globalEpsilon ? adef->likelihoodEpsilon : 1.0);
 	}
     }
   else

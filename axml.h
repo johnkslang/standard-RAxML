@@ -1178,6 +1178,7 @@ typedef  struct {
   int           fcThreshold; 
   boolean       sampleQuartetsWithoutReplacement;
   boolean       printIdenticalSequences;
+  boolean       globalEpsilon;
 } analdef;
 
 

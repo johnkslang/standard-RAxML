@@ -1377,7 +1377,7 @@ void shSupports(tree *tr, analdef *adef, rawdata *rdta, cruncheddata *cdta)
   else
     {
       evaluateGenericInitrav(tr, tr->start);
-      modOpt(tr, adef, FALSE, 1.0);
+      modOpt(tr, adef, FALSE, adef->globalEpsilon ? adef->likelihoodEpsilon : 1.0);
     }    
 
   printBothOpen("Time after model optimization: %f\n", gettime() - masterTime);

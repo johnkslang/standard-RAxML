@@ -1922,7 +1922,7 @@ void classifyML(tree *tr, analdef *adef)
   else
     {
       evaluateGenericInitrav(tr, tr->start);   
-      modOpt(tr, adef, TRUE, 1.0);
+      modOpt(tr, adef, TRUE, adef->globalEpsilon ? adef->likelihoodEpsilon : 1.0);
     }
 
   printBothOpen("\nLikelihood of reference tree: %f\n\n", tr->likelihood);

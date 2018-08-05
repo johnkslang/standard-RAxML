@@ -4317,6 +4317,7 @@ static void initAdef(analdef *adef)
   adef->fcThreshold = 99;
   adef->sampleQuartetsWithoutReplacement = FALSE;
   adef->printIdenticalSequences = FALSE; 
+  adef->globalEpsilon = FALSE;
 }
 
 static int modelExists(char *model, analdef *adef)
@@ -6060,6 +6061,10 @@ static void printREADME(void)
   printf("\n");
   printf("                  DEFAULT: identical sequences will also be removed in the .reduced file\n"); 
   printf("\n");
+  printf("      --global-epsilon specify that RAxML will use the -e likelihood epsilon (or its default) for all model optimizing\n");
+  printf("\n");
+  printf("                  DEFAULT: early model optimizations will use an epsilon of 1.0\n"); 
+  printf("\n");
   printf("\n\n\n\n");
 
 }
@@ -6211,7 +6216,7 @@ static void get_args(int argc, char *argv[], analdef *adef, tree *tr)
   while(1)
     {      
       static struct 
-	option long_options[18] =
+	option long_options[19] =
 	{	 
 	  {"mesquite",                  no_argument,       &flag, 1},
 	  {"silent",                    no_argument,       &flag, 1},
@@ -6230,6 +6235,7 @@ static void get_args(int argc, char *argv[], analdef *adef, tree *tr)
 	  {"bootstop-perms",            required_argument, &flag, 1},
 	  {"quartets-without-replacement", no_argument,    &flag, 1},
 	  {"print-identical-sequences", no_argument,       &flag, 1},
+	  {"global-epsilon",            no_argument,       &flag, 1},
 	  {0, 0, 0, 0}
 	};
       
@@ -6441,6 +6447,9 @@ static void get_args(int argc, char *argv[], analdef *adef, tree *tr)
 	    case 16:
 	      adef->printIdenticalSequences = TRUE;
 	      break;
+        case 17:
+          adef->globalEpsilon = TRUE;
+          break;
 	    default:
 	      if(flagCheck)
 		{
