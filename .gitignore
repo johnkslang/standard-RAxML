@@ -1,2 +1,6 @@
-*.o
+/Debug
+/Release
 /raxmlHPC*
+RAxML.opensdf
+RAxML.sdf
+RAxML_*

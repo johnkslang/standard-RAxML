@@ -1,0 +1,5 @@
+rm *.out
+./Release/RAxML -f e --global-epsilon -e 0.01 -t test1.tre -m GTRGAMMA -s test1.nex -n test1.out
+diff baseResults/RAxML_info.test1.out .
+diff baseResults/RAxML_log.test1.out .
+diff baseResults/RAxML_result.test1.out .
