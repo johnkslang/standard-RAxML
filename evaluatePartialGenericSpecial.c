@@ -214,7 +214,7 @@ static double evaluatePartialGTRCATPROT(int i, double ki, int counter,  traversa
   
   if(qz < zmin) 
     lz = zmin;
-  lz  = log(qz); 
+  lz  = LOG(qz); 
   lz *= ki;
   
   d[0] = 1.0;
@@ -238,6 +238,8 @@ static double evaluatePartialGTRCATPROT(int i, double ki, int counter,  traversa
 
 
 #else
+
+#define inline __inline
 
 static inline void computeVectorGTRCATPROT(double *lVector, int *eVector, double ki, int i, double qz, double rz,
 					   traversalInfo *ti, double *EIGN, double *EI, double *EV, double *tipVector, 
@@ -347,7 +349,7 @@ static double evaluatePartialGTRCATPROT(int i, double ki, int counter,  traversa
   
   if(qz < zmin) 
     lz = zmin;
-  lz  = log(qz); 
+  lz  = LOG(qz); 
   lz *= ki;
   
   d[0] = 1.0;
@@ -871,7 +873,7 @@ static double evaluatePartialGTRCAT_BINARY(int i, double ki, int counter,  trave
        
   if(qz < zmin) 
     lz = zmin;
-  lz  = log(qz); 
+  lz  = LOG(qz); 
   lz *= ki;  
   
   d = EXP (EIGN[0] * lz);
@@ -918,7 +920,7 @@ static double evaluatePartialGTRCAT(int i, double ki, int counter,  traversalInf
        
   if(qz < zmin) 
     lz = zmin;
-  lz  = log(qz); 
+  lz  = LOG(qz); 
   lz *= ki;  
   
   d[0] = EXP (EIGN[0] * lz);
@@ -972,7 +974,7 @@ static double evaluatePartialGTRCATSECONDARY(int i, double ki, int counter,  tra
   
   if(qz < zmin) 
     lz = zmin;
-  lz  = log(qz); 
+  lz  = LOG(qz); 
   lz *= ki;
   
   d[0] = 1.0;
@@ -1023,7 +1025,7 @@ static double evaluatePartialFlex(int i, double ki, int counter,  traversalInfo 
   
   if(qz < zmin) 
     lz = zmin;
-  lz  = log(qz); 
+  lz  = LOG(qz); 
   lz *= ki;
   
   d[0] = 1.0;
@@ -1076,7 +1078,7 @@ static double evaluatePartialGTRCATSECONDARY_6(int i, double ki, int counter,  t
   
   if(qz < zmin) 
     lz = zmin;
-  lz  = log(qz); 
+  lz  = LOG(qz); 
   lz *= ki;
   
   d[0] = 1.0;
@@ -1128,7 +1130,7 @@ static double evaluatePartialGTRCATSECONDARY_7(int i, double ki, int counter,  t
   
   if(qz < zmin) 
     lz = zmin;
-  lz  = log(qz); 
+  lz  = LOG(qz); 
   lz *= ki;
   
   d[0] = 1.0;
@@ -1197,11 +1199,11 @@ void computeFullTraversalInfo(tree *tr, nodeptr p, traversalInfo *ti, int *count
 	    double z;
 
 	    z = q->z[i];
-	    z = (z > zmin) ? log(z) : log(zmin);
+	    z = (z > zmin) ? LOG(z) : LOG(zmin);
 	    ti[*counter].qz[i] = z;
 
 	    z = r->z[i];
-	    z = (z > zmin) ? log(z) : log(zmin);
+	    z = (z > zmin) ? LOG(z) : LOG(zmin);
 	    ti[*counter].rz[i] = z;	    
 
 #ifdef _BASTIEN
@@ -1246,11 +1248,11 @@ void computeFullTraversalInfo(tree *tr, nodeptr p, traversalInfo *ti, int *count
 	      {
 		double z;
 		z = q->z[i];
-		z = (z > zmin) ? log(z) : log(zmin);
+		z = (z > zmin) ? LOG(z) : LOG(zmin);
 		ti[*counter].qz[i] = z;
 		
 		z = r->z[i];
-		z = (z > zmin) ? log(z) : log(zmin);
+		z = (z > zmin) ? LOG(z) : LOG(zmin);
 		ti[*counter].rz[i] = z;		
 
 #ifdef _BASTIEN
@@ -1286,11 +1288,11 @@ void computeFullTraversalInfo(tree *tr, nodeptr p, traversalInfo *ti, int *count
 	      {
 		double z;
 		z = q->z[i];
-		z = (z > zmin) ? log(z) : log(zmin);
+		z = (z > zmin) ? LOG(z) : LOG(zmin);
 		ti[*counter].qz[i] = z;
 		
 		z = r->z[i];
-		z = (z > zmin) ? log(z) : log(zmin);
+		z = (z > zmin) ? LOG(z) : LOG(zmin);
 		ti[*counter].rz[i] = z;		
 
 #ifdef _BASTIEN

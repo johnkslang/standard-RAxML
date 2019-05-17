@@ -28,6 +28,9 @@
  *  Bioinformatics 2006; doi: 10.1093/bioinformatics/btl446
  */
 
+#define _CRT_SECURE_NO_WARNINGS
+
+
 #ifndef WIN32
 #include <sys/times.h>
 #include <sys/types.h>
@@ -190,7 +193,7 @@ static double getBranchLength(tree *tr, int perGene, nodeptr p)
       if (z < zmin) 
 	z = zmin;      	 
       
-      x = -log(z);           
+      x = -LOG(z);           
     }
   else
     {
@@ -209,7 +212,7 @@ static double getBranchLength(tree *tr, int perGene, nodeptr p)
 	      z = p->z[i];
 	      if(z < zmin) 
 		z = zmin;      	 
-	      x = -log(z);// * fs[i];
+	      x = -LOG(z);// * fs[i];
 	      avgX += x * tr->partitionContributions[i];
 	    }
 
@@ -225,7 +228,7 @@ static double getBranchLength(tree *tr, int perGene, nodeptr p)
 	  if(z < zmin) 
 	    z = zmin;      	 
 	  
-	  x = -log(z);// * fs[perGene];	  
+	  x = -LOG(z);// * fs[perGene];	  
 	}
     }
 
@@ -480,7 +483,8 @@ static char *rootedTree(char *treestr, tree *tr, nodeptr p, boolean printBranchL
 
 	  if(!tr->multiBranch)
 	    {	    
-	      z = -log(p->z[0]);
+	      z = -LOG(p->z[0]);
+          //printf("z = %f\n", z);
 	      rz = exp(-(z * 0.5));
 	      p->z[0] = p->back->z[0] = rz;
 	    }
@@ -492,7 +496,8 @@ static char *rootedTree(char *treestr, tree *tr, nodeptr p, boolean printBranchL
 		  
 		  for(i = 0; i < tr->numBranches; i++)
 		    {			    
-		      z    = -log(p->z[i]);
+		      z    = -LOG(p->z[i]);
+              //printf("z = %f\n", z);
 		      rz   = exp(-(z * 0.5));
 		      p->z[i] = p->back->z[i] = rz;		    
 		    }		 
@@ -500,7 +505,8 @@ static char *rootedTree(char *treestr, tree *tr, nodeptr p, boolean printBranchL
 	      else
 		{				
 		  assert(perGene >= 0 && perGene < tr->numBranches);
-		  z = -log(p->z[perGene]);
+		  z = -LOG(p->z[perGene]);
+          //printf("z = %f\n", z);
 		  rz = exp(-(z * 0.5));
 		  p->z[perGene] = p->back->z[perGene] = rz;	       	      	      
 		}

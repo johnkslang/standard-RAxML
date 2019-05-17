@@ -35,6 +35,8 @@
 #include <unistd.h> 
 #endif
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <limits.h>
 #include <math.h>
 #include <time.h> 
@@ -69,7 +71,8 @@ static double getBranch(tree *tr, double *b, double *bb)
 	z = zmin;      	 
       if(z > zmax)
 	z = zmax;
-      z = -log(z);
+      z = -LOG(z);
+      //printf("z = %f\n", z);
       return z;	
     }
   else
@@ -86,7 +89,8 @@ static double getBranch(tree *tr, double *b, double *bb)
 	    x = zmin;      	 
 	  if(x > zmax)
 	    x = zmax;
-	  x = -log(x);
+	  x = -LOG(x);
+      //printf("z = %f\n", z);
 	  
 	  z += x * tr->partitionContributions[i];
 	}	
@@ -108,7 +112,8 @@ static double getBranchPerPartition(tree *tr, double *b, double *bb, int j)
 	z = zmin;      	 
       if(z > zmax)
 	z = zmax;
-      z = -log(z);
+      z = -LOG(z);
+      //printf("z = %f\n", z);
       return z;	
     }
   else
@@ -122,7 +127,8 @@ static double getBranchPerPartition(tree *tr, double *b, double *bb, int j)
 	z = zmin;      	 
       if(z > zmax)
 	z = zmax;
-      z = -log(z);
+      z = -LOG(z);
+      //printf("z = %f\n", z);
       
       return z;
     } 
@@ -429,6 +435,7 @@ static nodeptr findRootDirection(nodeptr p, tree *tr, int rootNumber)
   /* one of the two subtrees must contain the root */
 
   assert(0);
+  return p;
 }
 
 
@@ -1914,9 +1921,8 @@ void classifyML(tree *tr, analdef *adef)
     }
   else
     {
-      evaluateGenericInitrav(tr, tr->start); 
-  
-      modOpt(tr, adef, TRUE, 1.0);
+      evaluateGenericInitrav(tr, tr->start);   
+      modOpt(tr, adef, TRUE, adef->globalEpsilon ? adef->likelihoodEpsilon : 1.0);
     }
 
   printBothOpen("\nLikelihood of reference tree: %f\n\n", tr->likelihood);
@@ -2165,14 +2171,14 @@ void classifyML(tree *tr, analdef *adef)
 	    prob = exp(inf[j].lh - lmax) / all;	      	    
 	    
 	    if(prob > 0)
-	      entropy -= ( prob * log(prob) ); /*pp 20110531 */	      			     
+	      entropy -= ( prob * LOG(prob) ); /*pp 20110531 */	      			     
 	    
 	    j++;
 	  }
 	
 	/* normalize entropy by dividing with the log(validEntries) which is the maximum Entropy possible */
 	
-	fprintf(entropyFile, "%s\t%f\n", tr->nameList[tr->inserts[i]], entropy / log((double)validEntries));	      	   
+	fprintf(entropyFile, "%s\t%f\n", tr->nameList[tr->inserts[i]], entropy / LOG((double)validEntries));	      	   
       }     
       
     rax_free(inf);

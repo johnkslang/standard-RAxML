@@ -26,6 +26,7 @@
  *  Bioinformatics 2006; doi: 10.1093/bioinformatics/btl446
  */
 
+#define _CRT_SECURE_NO_WARNINGS
 
 #ifndef WIN32  
 #include <sys/times.h>
@@ -1334,9 +1335,9 @@ static double computeIC_Value(unsigned int supportedBips, unsigned int *maxima, 
   supportFreq = (double)supportedBips / (double)totalBipsAll;
   
   if(supportedBips == 0)
-    ic = log(n);
+    ic = LOG(n);
   else    
-    ic = log(n) + supportFreq * log(supportFreq);
+    ic = LOG(n) + supportFreq * LOG(supportFreq);
 
   for(i = 0; i < loopLength; i++)
     {
@@ -1345,10 +1346,10 @@ static double computeIC_Value(unsigned int supportedBips, unsigned int *maxima, 
       supportFreq =  (double)maxima[i] / (double)totalBipsAll;
       
       if(maxima[i] != 0)
-	ic += supportFreq * log(supportFreq);
+	ic += supportFreq * LOG(supportFreq);
     }
   
-  ic /= log(n);
+  ic /= LOG(n);
   
   if(negativeIC)
     return (-ic);
@@ -5405,16 +5406,16 @@ static double computeIC_ValueDouble(double refFrequency, double confFrequency, b
 	 }      
      }
     
-   ic = log(2);
+   ic = LOG(2);
    
    if(refFrequency > 0)
-     ic += relativeRef * log(relativeRef);
+     ic += relativeRef * LOG(relativeRef);
    
    if(confFrequency > 0)
-     ic += relativeConf * log(relativeConf);
+     ic += relativeConf * LOG(relativeConf);
       
-   //go from log(x) to log_2(x)
-   ic /= log(2);
+   //go from LOG(x) to log_2(x)
+   ic /= LOG(2);
   
    if(negativeIC)
      return (-ic);
@@ -5481,20 +5482,20 @@ static double computeICA_ValueDouble(double refFrequency, entry ** conflicts, un
     
     relativeRef = refFrequency / relSum;
         
-    ica = log(n);
+    ica = LOG(n);
     
     if(relativeRef > 0)
-      ica += relativeRef * log(relativeRef);
+      ica += relativeRef * LOG(relativeRef);
 
       
     for(i = 0; i < n-1; i++)
       {  
 	if(conflicts[i]->adjustedSupport > 0)
-          ica += (conflicts[i]->adjustedSupport / relSum) * log(conflicts[i]->adjustedSupport / relSum);      
+          ica += (conflicts[i]->adjustedSupport / relSum) * LOG(conflicts[i]->adjustedSupport / relSum);      
       }
       
-    //go from log(x) to log_n(x)
-    ica /= log(n);
+    //go from LOG(x) to log_n(x)
+    ica /= LOG(n);
   
     if(negativeIC)
       return (-ica);
@@ -5571,22 +5572,22 @@ static double computeICAFromTemp_ValueDouble(double refFrequency, entry ** confl
     
     relativeRef = refFrequency / relSum;
         
-    ica = log(n);
+    ica = LOG(n);
     
     if(relativeRef > 0)
-      ica += relativeRef * log(relativeRef);
+      ica += relativeRef * LOG(relativeRef);
       
     for(i = 0; i < n-1; i++)
       {  
 	// if(conflicts[i]->adjustedSupport > 0)
 	if(conflicts[i]->tempSupport > 0)
-	  //     ica += (conflicts[i]->adjustedSupport / relSum) * log(conflicts[i]->adjustedSupport / relSum);      
-	  ica += (conflicts[i]->tempSupport / relSum) * log(conflicts[i]->tempSupport / relSum);      
+	  //     ica += (conflicts[i]->adjustedSupport / relSum) * LOG(conflicts[i]->adjustedSupport / relSum);      
+	  ica += (conflicts[i]->tempSupport / relSum) * LOG(conflicts[i]->tempSupport / relSum);      
       }
     
     
-    //go from log(x) to log_n(x)
-    ica /= log(n);
+    //go from LOG(x) to log_n(x)
+    ica /= LOG(n);
   
     if(negativeIC)
       return (-ica);

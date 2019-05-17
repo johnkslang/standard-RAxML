@@ -35,6 +35,8 @@
 #include <unistd.h> 
 #endif
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <limits.h>
 #include <math.h>
 #include <time.h> 
@@ -826,7 +828,7 @@ static void traversalInfoAncestralRoot(nodeptr p, traversalInfo *ti, int *counte
        if(z > zmax)
 	 z = zmax;
        
-       z = log(z);
+       z = LOG(z);
        
        ti[*counter].qz[i] = z;
        ti[*counter].rz[i] = z;     

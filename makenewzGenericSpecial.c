@@ -1244,9 +1244,9 @@ static double coreCatAsc(double *EIGN, double *sumtable, int upper,
        
       //TODO scaler ???
       //g(x) := derivatives of f(x) * log(f(x)) goldman corrections 2 and 3 where f(x) is the likelihood function 
-      extended_lh        += inv_Li * log(inv_Li); // Li * log(Li)
-      extended_dlnLdlz   += (dlnLidlz * (log(inv_Li) + 1.0)); //Li' * (log(Li) + 1)			   
-      extended_d2lnLdlz2 += ((d2lnLidlz2 * (log(inv_Li) + 1.0)) + (pow2(dlnLidlz) / inv_Li)); // (Li'' * (log(Li) + 1)) + (Li')^2 / Li
+      extended_lh        += inv_Li * LOG(inv_Li); // Li * log(Li)
+      extended_dlnLdlz   += (dlnLidlz * (LOG(inv_Li) + 1.0)); //Li' * LOG(Li) + 1)			   
+      extended_d2lnLdlz2 += ((d2lnLidlz2 * (LOG(inv_Li) + 1.0)) + (pow2(dlnLidlz) / inv_Li)); // (Li'' * LOG(Li) + 1)) + (Li')^2 / Li
 
       //sum over likelihood and 1st and 2nd derivative
       //ascScaler is the numerical scaling for preventing underflow 
@@ -1256,7 +1256,7 @@ static double coreCatAsc(double *EIGN, double *sumtable, int upper,
     } 
 
   //calculate the log likelihood 
-  loglh = log(lh);
+  loglh = LOG(lh);
 
   //printf("loglh %f\n", loglh);
 
@@ -1408,9 +1408,9 @@ static double coreGammaAsc(double *gammaRates, double *EIGN, double *sumtable, i
       d2lnLidlz2 *= 0.25;           //2nd derivative
 
       //g(x) := derivatives of f(x) * log(f(x)) goldman corrections 2 and 3 where f(x) is the likelihood function 
-      extended_lh        += inv_Li * log(inv_Li); // Li * log(Li)
-      extended_dlnLdlz   += (dlnLidlz * (log(inv_Li) + 1.0)); //Li' * (log(Li) + 1)			   
-      extended_d2lnLdlz2 += ((d2lnLidlz2 * (log(inv_Li) + 1.0)) + (pow2(dlnLidlz) / inv_Li)); // (Li'' * (log(Li) + 1)) + (Li')^2 / Li
+      extended_lh        += inv_Li * LOG(inv_Li); // Li * log(Li)
+      extended_dlnLdlz   += (dlnLidlz * (LOG(inv_Li) + 1.0)); //Li' * LOG(Li) + 1)			   
+      extended_d2lnLdlz2 += ((d2lnLidlz2 * (LOG(inv_Li) + 1.0)) + (pow2(dlnLidlz) / inv_Li)); // (Li'' * LOG(Li) + 1)) + (Li')^2 / Li
 
       
       //sum over likelihood and 1st and 2nd derivative
@@ -1423,16 +1423,16 @@ static double coreGammaAsc(double *gammaRates, double *EIGN, double *sumtable, i
     } 
 
   //calculate the log likelihood 
-  loglh = log(lh);
+  loglh = LOG(lh);
 
   //printf("loglh %f\n", loglh);
 
-  //1st and 2nd derivative for the Lewis correction i.e., derivatives of log(1.0 - f(x))
+  //1st and 2nd derivative for the Lewis correction i.e., derivatives of LOG(1.0 - f(x))
   //here f(x) := L(A) + L(C) + L(G) + L(T) 
   *ext_dlnLdlz   = (dlnLdlz / (lh - 1.0));
   *ext_d2lnLdlz2 = ((lh - 1.0) * (d2lnLdlz2) - pow2(dlnLdlz)) / pow2(lh - 1.0);  
   
-  //1st and 2nd derivative for the Felsenstein correction, i.e., derivative of log(f(x))
+  //1st and 2nd derivative for the Felsenstein correction, i.e., derivative of LOG(f(x))
   //here f(x) := L(A) + L(C) + L(G) + L(T) 
   *felsenstein_ext_dlnLdlz    = dlnLdlz / lh;
   *felsenstein_ext_d2lnLdlz2 = ((d2lnLdlz2 * lh) - pow2(dlnLdlz)) / pow2(lh);
@@ -1474,7 +1474,7 @@ static double coreGammaAsc(double *gammaRates, double *EIGN, double *sumtable, i
     pow3(lh);
 
 
-  //normal derivatives of the log likelihood, i.e., log(f(x))
+  //normal derivatives of the log likelihood, i.e.,LOG(f(x))
   //here f(x) := L(site_i) 
   *standard_ext_dlnLdlz   = standard_dlnLdlz;
   *standard_ext_d2lnLdlz2 = standard_d2lnLdlz2;
@@ -4663,7 +4663,7 @@ static void topLevelMakenewz(tree *tr, double *z0, int _maxiter, double *result)
 		    z[i] = zmax;		      		    
 		}
 
-	      lz    = log(z[i]);
+	      lz    = LOG(z[i]);
 
 	      tr->coreLZ[i] = lz;
 	    }
@@ -5323,7 +5323,7 @@ void makenewzClassify(tree *tr, int _maxiter, double *result, double *z0, double
 
 	      if (z[i] < zmin) z[i] = zmin;
 	      else if (z[i] > zmax) z[i] = zmax;
-	      lz    = log(z[i]);
+	      lz    = LOG(z[i]);
 
 	      coreLZ[i] = lz;
 	    }

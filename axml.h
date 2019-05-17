@@ -29,6 +29,7 @@
  *  Bioinformatics 2006; doi: 10.1093/bioinformatics/btl446
  */
 
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <assert.h>
 #include <stdint.h>
@@ -157,8 +158,8 @@
 #define NINT(x)   ((int) ((x)>0 ? ((x)+0.5) : ((x)-0.5)))
 
 
-#define LOG(x)  log(x)
-#define EXP(x)  exp(x)
+#define LOG(x)  (/*printf("LOG x = %g\n", x), */log(x))
+#define EXP(x)  (/*printf("EXP x = %g\n", x), */exp(x))
 
 
 
@@ -1177,6 +1178,7 @@ typedef  struct {
   int           fcThreshold; 
   boolean       sampleQuartetsWithoutReplacement;
   boolean       printIdenticalSequences;
+  boolean       globalEpsilon;
 } analdef;
 
 
@@ -1267,9 +1269,11 @@ extern void makeGammaCats (int rateHetModel, double alpha, double *gammaRates, i
 extern void initModel ( tree *tr, rawdata *rdta, cruncheddata *cdta, analdef *adef );
 extern void doAllInOne ( tree *tr, analdef *adef );
 
-extern void classifyML(tree *tr, analdef *adef) __attribute__((noreturn));
+typedef size_t ssize_t; 
+
+extern void classifyML(tree *tr, analdef *adef);
 extern void classifyMP(tree *tr, analdef *adef);
-extern void subtreeEPA(tree *tr, analdef *adef) __attribute__((noreturn));
+extern void subtreeEPA(tree *tr, analdef *adef);
 extern void collectSubtrees(tree *tr, nodeptr *subtrees, int *count, int ogn);
 extern int treeFindTipByLabelString(char  *str, tree *tr, boolean check);
 extern ssize_t rax_getline(char **lineptr, size_t *n, FILE *h);

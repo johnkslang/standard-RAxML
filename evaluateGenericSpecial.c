@@ -115,9 +115,9 @@ static void calcDiagptableFlex(double z, int numberOfCategories, double *rptr, d
   assert(numStates <= 64);
   
   if (z < zmin) 
-    lz = log(zmin);
+    lz = LOG(zmin);
   else
-    lz = log(z);
+    lz = LOG(z);
 
   for(l = 0; l < rates; l++)      
     lza[l] = EIGN[l] * lz; 
@@ -144,9 +144,9 @@ static void calcDiagptableFlex_LG4(double z, int numberOfCategories, double *rpt
   assert(numStates <= 64);
   
   if (z < zmin) 
-    lz = log(zmin);
+    lz = LOG(zmin);
   else
-    lz = log(z);
+    lz = LOG(z);
 
   for(i = 0; i <  numberOfCategories; i++)
     {	      	       
@@ -886,9 +886,9 @@ void calcDiagptable(double z, int data, int numberOfCategories, double *rptr, do
   double lz;
 
   if (z < zmin) 
-    lz = log(zmin);
+    lz = LOG(zmin);
   else
-    lz = log(z);
+    lz = LOG(z);
 
   switch(data)
     {

@@ -35,6 +35,8 @@
 #include <unistd.h> 
 #endif
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <math.h>
 #include <time.h> 
 #include <stdlib.h>
@@ -128,15 +130,15 @@ static void insertFast (tree *tr, nodeptr p, nodeptr q, int numBranches)
       
       for(i = 0; i < numBranches; i++)
 	{
-	  lzqr = (zqr[i] > zmin) ? log(zqr[i]) : log(zmin); 
-	  lzqs = (zqs[i] > zmin) ? log(zqs[i]) : log(zmin);
-	  lzrs = (zrs[i] > zmin) ? log(zrs[i]) : log(zmin);
+	  lzqr = (zqr[i] > zmin) ? LOG(zqr[i]) : LOG(zmin); 
+	  lzqs = (zqs[i] > zmin) ? LOG(zqs[i]) : LOG(zmin);
+	  lzrs = (zrs[i] > zmin) ? LOG(zrs[i]) : LOG(zmin);
 	  lzsum = 0.5 * (lzqr + lzqs + lzrs);
 	  
 	  lzq = lzsum - lzrs;
 	  lzr = lzsum - lzqs;
 	  lzs = lzsum - lzqr;
-	  lzmax = log(zmax);
+	  lzmax = LOG(zmax);
 	  
 	  if      (lzq > lzmax) {lzq = lzmax; lzr = lzqr; lzs = lzqs;} 
 	  else if (lzr > lzmax) {lzr = lzmax; lzq = lzqr; lzs = lzrs;}
@@ -1375,7 +1377,7 @@ void shSupports(tree *tr, analdef *adef, rawdata *rdta, cruncheddata *cdta)
   else
     {
       evaluateGenericInitrav(tr, tr->start);
-      modOpt(tr, adef, FALSE, 1.0);
+      modOpt(tr, adef, FALSE, adef->globalEpsilon ? adef->likelihoodEpsilon : 1.0);
     }    
 
   printBothOpen("Time after model optimization: %f\n", gettime() - masterTime);
